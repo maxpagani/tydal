@@ -1,0 +1,819 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <logicalFolder name="f2" displayName="GenericParser" projectFiles="true">
+        <itemPath>GenericParser/ErrorFormatter.hh</itemPath>
+        <itemPath>GenericParser/ErrorLogger.hh</itemPath>
+        <itemPath>GenericParser/ReadingPosition.hh</itemPath>
+        <itemPath>GenericParser/lex.hh</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="OutputTranslator" projectFiles="true">
+        <itemPath>OutputTranslator/Base.hh</itemPath>
+        <itemPath>OutputTranslator/CPlusPlus.hh</itemPath>
+        <itemPath>OutputTranslator/Factory.hh</itemPath>
+        <itemPath>OutputTranslator/Java.hh</itemPath>
+        <itemPath>OutputTranslator/Scala.hh</itemPath>
+        <itemPath>OutputTranslator/Tydal.hh</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="Tydal" projectFiles="true">
+        <logicalFolder name="f2" displayName="Errors" projectFiles="true">
+          <itemPath>Tydal/Errors/BasicError.hh</itemPath>
+          <itemPath>Tydal/Errors/CantMergeCompleteType.hh</itemPath>
+          <itemPath>Tydal/Errors/CantMergeDifferentTypes.hh</itemPath>
+          <itemPath>Tydal/Errors/CantMergeDuplicateEnumLabels.hh</itemPath>
+          <itemPath>Tydal/Errors/CantMergeDuplicateRecordFields.hh</itemPath>
+          <itemPath>Tydal/Errors/ColonExpected.hh</itemPath>
+          <itemPath>Tydal/Errors/DuplicateEnumLabel.hh</itemPath>
+          <itemPath>Tydal/Errors/DuplicatedRecordField.hh</itemPath>
+          <itemPath>Tydal/Errors/InvalidLiteral.hh</itemPath>
+          <itemPath>Tydal/Errors/InvalidVariantType.hh</itemPath>
+          <itemPath>Tydal/Errors/RightBananaExpected.hh</itemPath>
+          <itemPath>Tydal/Errors/SymbolExpected.hh</itemPath>
+          <itemPath>Tydal/Errors/TypeExpected.hh</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f1" displayName="Grammar" projectFiles="true">
+          <itemPath>Tydal/Grammar/ArrayType.hh</itemPath>
+          <itemPath>Tydal/Grammar/BaseType.hh</itemPath>
+          <itemPath>Tydal/Grammar/EnumLabel.hh</itemPath>
+          <itemPath>Tydal/Grammar/EnumType.hh</itemPath>
+          <itemPath>Tydal/Grammar/OuterFieldReferenceType.hh</itemPath>
+          <itemPath>Tydal/Grammar/Partiality.hh</itemPath>
+          <itemPath>Tydal/Grammar/Program.hh</itemPath>
+          <itemPath>Tydal/Grammar/RecordField.hh</itemPath>
+          <itemPath>Tydal/Grammar/RecordType.hh</itemPath>
+          <itemPath>Tydal/Grammar/ReferenceType.hh</itemPath>
+          <itemPath>Tydal/Grammar/SimpleType.hh</itemPath>
+          <itemPath>Tydal/Grammar/StringType.hh</itemPath>
+          <itemPath>Tydal/Grammar/VariantCaseEntry.hh</itemPath>
+          <itemPath>Tydal/Grammar/VariantType.hh</itemPath>
+        </logicalFolder>
+        <itemPath>Tydal/BaseTokenizer.hh</itemPath>
+        <itemPath>Tydal/LexParser.hh</itemPath>
+        <itemPath>Tydal/Parser.hh</itemPath>
+        <itemPath>Tydal/Token.hh</itemPath>
+        <itemPath>Tydal/TokenIterator.hh</itemPath>
+        <itemPath>Tydal/Tokenizer.hh</itemPath>
+      </logicalFolder>
+      <itemPath>Tydal/ErrorFormatterTerse.hh</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="f2" displayName="GenericParser" projectFiles="true">
+        <itemPath>GenericParser/ErrorFormatter.cc</itemPath>
+        <itemPath>GenericParser/ErrorLogger.cc</itemPath>
+        <itemPath>GenericParser/ReadingPosition.cc</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="OutputTranlsator" projectFiles="true">
+        <itemPath>OutputTranslator/Base.cc</itemPath>
+        <itemPath>OutputTranslator/CPlusPlus.cc</itemPath>
+        <itemPath>OutputTranslator/Factory.cc</itemPath>
+        <itemPath>OutputTranslator/Java.cc</itemPath>
+        <itemPath>OutputTranslator/Scala.cc</itemPath>
+        <itemPath>OutputTranslator/Tydal.cc</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="Tydal" projectFiles="true">
+        <logicalFolder name="f3" displayName="Errors" projectFiles="true">
+          <itemPath>Tydal/Errors/BasicError.cc</itemPath>
+          <itemPath>Tydal/Errors/CantMergeCompleteType.cc</itemPath>
+          <itemPath>Tydal/Errors/CantMergeDifferentTypes.cc</itemPath>
+          <itemPath>Tydal/Errors/CantMergeDuplicateEnumLabels.cc</itemPath>
+          <itemPath>Tydal/Errors/CantMergeDuplicateRecordFields.cc</itemPath>
+          <itemPath>Tydal/Errors/ColonExpected.cc</itemPath>
+          <itemPath>Tydal/Errors/DuplicateEnumLabel.cc</itemPath>
+          <itemPath>Tydal/Errors/DuplicatedRecordField.cc</itemPath>
+          <itemPath>Tydal/Errors/InvalidLiteral.cc</itemPath>
+          <itemPath>Tydal/Errors/InvalidVariantType.cc</itemPath>
+          <itemPath>Tydal/Errors/RightBananaExpected.cc</itemPath>
+          <itemPath>Tydal/Errors/SymbolExpected.cc</itemPath>
+          <itemPath>Tydal/Errors/TypeExpected.cc</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f1" displayName="Grammar" projectFiles="true">
+          <itemPath>Tydal/Grammar/ArrayType.cc</itemPath>
+          <itemPath>Tydal/Grammar/BaseType.cc</itemPath>
+          <itemPath>Tydal/Grammar/EnumLabel.cc</itemPath>
+          <itemPath>Tydal/Grammar/EnumType.cc</itemPath>
+          <itemPath>Tydal/Grammar/OuterFieldReferenceType.cc</itemPath>
+          <itemPath>Tydal/Grammar/Program.cc</itemPath>
+          <itemPath>Tydal/Grammar/RecordField.cc</itemPath>
+          <itemPath>Tydal/Grammar/RecordType.cc</itemPath>
+          <itemPath>Tydal/Grammar/ReferenceType.cc</itemPath>
+          <itemPath>Tydal/Grammar/SimpleType.cc</itemPath>
+          <itemPath>Tydal/Grammar/StringType.cc</itemPath>
+          <itemPath>Tydal/Grammar/VariantCaseEntry.cc</itemPath>
+          <itemPath>Tydal/Grammar/VariantType.cc</itemPath>
+        </logicalFolder>
+        <itemPath>Tydal/BaseTokenizer.cc</itemPath>
+        <itemPath>Tydal/LexParser.cc</itemPath>
+        <itemPath>Tydal/Parser.cc</itemPath>
+        <itemPath>Tydal/TokenIterator.cc</itemPath>
+        <itemPath>Tydal/Tokenizer.cc</itemPath>
+      </logicalFolder>
+      <itemPath>Tydal/ErrorFormatterTerse.cc</itemPath>
+      <itemPath>main.cc</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f1" displayName="TestLib" projectFiles="true">
+      <itemPath>tests/SimpleTestSuite.cc</itemPath>
+      <itemPath>tests/SimpleTestSuite.hh</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f2"
+                     displayName="ComplexTypes"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/Test_ComplexTypes.cc</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1"
+                     displayName="CreateParser"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/Test_CreateParser.cc</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3"
+                     displayName="NestedTypes"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/Test_NestedTypes.cc</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4"
+                     displayName="ScalaTranslation"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/Test_SimpleScala.cc</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5"
+                     displayName="ScalaTranslation"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/Test_RecordScala.cc</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <commandLine>-std=gnu++14</commandLine>
+          <warningLevel>2</warningLevel>
+        </ccTool>
+      </compileType>
+      <item path="GenericParser/ErrorFormatter.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GenericParser/ErrorFormatter.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GenericParser/ErrorLogger.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GenericParser/ErrorLogger.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GenericParser/ReadingPosition.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GenericParser/ReadingPosition.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GenericParser/lex.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Base.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Base.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OutputTranslator/CPlusPlus.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OutputTranslator/CPlusPlus.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Factory.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Factory.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Java.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Java.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Scala.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Scala.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Tydal.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Tydal.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/BaseTokenizer.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/BaseTokenizer.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/ErrorFormatterTerse.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/ErrorFormatterTerse.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/BasicError.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/BasicError.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeCompleteType.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeCompleteType.hh"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeDifferentTypes.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeDifferentTypes.hh"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeDuplicateEnumLabels.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeDuplicateEnumLabels.hh"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeDuplicateRecordFields.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeDuplicateRecordFields.hh"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/ColonExpected.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/ColonExpected.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/DuplicateEnumLabel.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/DuplicateEnumLabel.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/DuplicatedRecordField.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/DuplicatedRecordField.hh"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/InvalidLiteral.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/InvalidLiteral.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/InvalidVariantType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/InvalidVariantType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/RightBananaExpected.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/RightBananaExpected.hh"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/SymbolExpected.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/SymbolExpected.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/TypeExpected.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/TypeExpected.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/ArrayType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/ArrayType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/BaseType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/BaseType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/EnumLabel.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/EnumLabel.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/EnumType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/EnumType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/OuterFieldReferenceType.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/OuterFieldReferenceType.hh"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/Partiality.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/Program.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/Program.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/RecordField.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/RecordField.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/RecordType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/RecordType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/ReferenceType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/ReferenceType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/SimpleType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/SimpleType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/StringType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/StringType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/VariantCaseEntry.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/VariantCaseEntry.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/VariantType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/VariantType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/LexParser.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/LexParser.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Parser.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Parser.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Token.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/TokenIterator.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/TokenIterator.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Tokenizer.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Tokenizer.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f5</output>
+        </linkerTool>
+      </folder>
+      <item path="main.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/SimpleTestSuite.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/SimpleTestSuite.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Test_ComplexTypes.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Test_CreateParser.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Test_NestedTypes.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Test_RecordScala.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Test_SimpleScala.cc" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <commandLine>-std=gnu++14</commandLine>
+          <warningLevel>2</warningLevel>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="GenericParser/ErrorFormatter.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GenericParser/ErrorFormatter.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GenericParser/ErrorLogger.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GenericParser/ErrorLogger.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GenericParser/ReadingPosition.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GenericParser/ReadingPosition.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GenericParser/lex.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Base.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Base.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OutputTranslator/CPlusPlus.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OutputTranslator/CPlusPlus.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Factory.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Factory.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Java.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Java.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Scala.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Scala.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Tydal.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OutputTranslator/Tydal.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/BaseTokenizer.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/BaseTokenizer.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/ErrorFormatterTerse.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/ErrorFormatterTerse.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/BasicError.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/BasicError.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeCompleteType.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeCompleteType.hh"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeDifferentTypes.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeDifferentTypes.hh"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeDuplicateEnumLabels.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeDuplicateEnumLabels.hh"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeDuplicateRecordFields.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/CantMergeDuplicateRecordFields.hh"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/ColonExpected.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/ColonExpected.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/DuplicateEnumLabel.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/DuplicateEnumLabel.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/DuplicatedRecordField.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/DuplicatedRecordField.hh"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/InvalidLiteral.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/InvalidLiteral.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/InvalidVariantType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/InvalidVariantType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/RightBananaExpected.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/RightBananaExpected.hh"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Errors/SymbolExpected.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/SymbolExpected.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/TypeExpected.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Errors/TypeExpected.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/ArrayType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/ArrayType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/BaseType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/BaseType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/EnumLabel.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/EnumLabel.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/EnumType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/EnumType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/OuterFieldReferenceType.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/OuterFieldReferenceType.hh"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/Partiality.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/Program.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/Program.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/RecordField.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/RecordField.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/RecordType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/RecordType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/ReferenceType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/ReferenceType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/SimpleType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/SimpleType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/StringType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/StringType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/VariantCaseEntry.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/VariantCaseEntry.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/VariantType.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Grammar/VariantType.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/LexParser.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/LexParser.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Parser.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Parser.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Token.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/TokenIterator.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/TokenIterator.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tydal/Tokenizer.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tydal/Tokenizer.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f5</output>
+        </linkerTool>
+      </folder>
+      <item path="main.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/SimpleTestSuite.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/SimpleTestSuite.hh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Test_ComplexTypes.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Test_CreateParser.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Test_NestedTypes.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Test_RecordScala.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Test_SimpleScala.cc" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
