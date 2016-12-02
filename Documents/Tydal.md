@@ -2,7 +2,7 @@
 
 # Introduction
 Applications store and communication structured information by using types. In order to specify types formal languages are often used. The advantage is that the documentation is less prone to misinterpretation and it can be used for automatic processing to create source code, test cases and configuration files.
-This document specify Tydal (TYpe Definition Astounding Language) a type definition language specifically targeted at defining types that can be later encoded in JSON.
+This document specify Tydal (TYpe Definition Astounding Language) a type definition language specifically targeted at defining types that can be later encoded in [JSON](http://json.org/).
 
 ## Dictionary
 A list of specific terms and acronyms used throughout in this document.
@@ -17,7 +17,7 @@ Namespace: A set of symbols used to organize web-service names. In this document
 # Tydal Informal Description
 This section describes the language in an informal manner. This is useful to get a grasp of the langauge.
 ## Values
-Values (constant literals) are written using the JSON convention1. According to this convention the type used for a given value is implicit in the notation used:
+Values (constant literals) are written using the [JSON](http://json.org/) convention1. According to this convention the type used for a given value is implicit in the notation used:
 > “text” → String
 > 23 → Integer number (decimal)
 > 3.14 → floating point number
@@ -109,7 +109,7 @@ String is the underlying type for a number of string type. More precisely Date, 
 > `String(State)` → a string containing a State enumeration value.
 String Type construct is a kind of type definition used to declare string specialization. There is no mechanism to define the inner structure or the interface of these types, since this Is defined to be out of scope2.
 The notation is somewhat redundant, since String(T) could have been replaced by T, but this is intended to remark that this typing is just a weak convention over the implementation type.
-***Dates*** are expressed using the ISO standard 86013. The pattern used is YYYY-MM-DD with or without the dashes (YYYYMMDD) where YYYY is the year, MM is the month (1 is January, 2 is February, …) and DD is the day (1 is the first day of the month). Both month (MM) and day (DD) are left padded with '0' (zero) to be written always with two characters. Example: “2015-10-08” is October, 8th 2015.
+***Dates*** are expressed using the [ISO standard 86013](https://en.wikipedia.org/wiki/ISO_8601). The pattern used is YYYY-MM-DD with or without the dashes (YYYYMMDD) where YYYY is the year, MM is the month (1 is January, 2 is February, …) and DD is the day (1 is the first day of the month). Both month (MM) and day (DD) are left padded with '0' (zero) to be written always with two characters. Example: “2015-10-08” is October, 8th 2015.
 ***Time*** (expressing either a duration or the time of the day) is expressed by using the 24 hours notation, although values greater than 24 can be used when expressing duration. The time duration is expressed as hours, minutes and seconds, optionally the milliseconds are added as decimal part of the seconds, according to the following template: H:MM:SS where H represent hours, MM is the 2 digits minutes (in the range 0-59), SS represents the seconds and is expressed as a decimal value or optionally as a fixed point value. The integer part of the seconds is left-padded with '0' (zero) to reach two character length. The part on the right of the decimal point can be from one to three digits without padding.
 
 > Examples:
@@ -120,4 +120,4 @@ The notation is somewhat redundant, since String(T) could have been replaced by 
 > 11:4:23	(no padding 0 for minutes)
 > 9:23:01.	(decimal point, but no milliseconds)
 
-Timestamps are composed by a date followed by an UTC time and the optional timezone. Timestamp is formatted according to the ISO standard 86014. Time representation may specify the timezone. Example: “2015-10-08T09:35:21+01:00” specify October, 8th 2015, 9:35am, CET (GMT+1) timezone. If no timezone is specified, server local timezone is assumed. Milliseconds may be indicated as a decimal part of seconds.
+***Timestamps*** are composed by a date followed by an UTC time and the optional timezone. Timestamp is formatted according to the [ISO standard 86014](https://en.wikipedia.org/wiki/ISO_8601). Time representation may specify the timezone. Example: “2015-10-08T09:35:21+01:00” specify October, 8th 2015, 9:35am, CET (GMT+1) timezone. If no timezone is specified, server local timezone is assumed. Milliseconds may be indicated as a decimal part of seconds.
