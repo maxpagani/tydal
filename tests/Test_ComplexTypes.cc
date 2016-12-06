@@ -19,6 +19,7 @@
 #include "Tydal/Grammar/EnumLabel.hh"
 #include "Tydal/Grammar/EnumType.hh"
 #include "Tydal/Grammar/StringType.hh"
+#include "Tydal/Errors/BasicError.hh"
 
 /*
  * Simple C++ Test Suite
@@ -240,7 +241,6 @@ namespace
     void test_variant( TestSuite const& suite )
     {
         Test test(suite,__func__);
-        std::cout << "Hello\n";
         std::string programText{
             "Type simple: Record\n"
             "    Variant a : String\n"
@@ -251,8 +251,21 @@ namespace
             "            c : Int\n"
             "    End\n"
             "End"};
-        Program program = Tydal::parse( programText, "Variant.tydal" );
-        std::cout << "Bye\n";
+        try
+        {
+            Program program = Tydal::parse( programText, "Variant.tydal" );
+        }
+        catch( Tydal::Errors::BasicError const& e )
+        {
+            std::cout << "Exception:\n"
+                      << " " << e.what() << "\n";
+            TEST_ASSERT( test, false );
+        }
+        catch( ... )
+        {
+            std::cout << "generic exception caught\n";
+            TEST_ASSERT( test, false );
+        }
     }
 }
 
