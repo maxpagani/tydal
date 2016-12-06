@@ -47,7 +47,6 @@ void testSimpleType( TestSuite const& suite, char const* testName, char const* t
     OutputTranslator::Scala scala;
     std::ostringstream out;
     scala.print( program, out );
-    std::cout << out.str() << '\n';
     TEST_ASSERT( test, out.str() == std::string("type i = ")+typeName );
 }
 
@@ -74,11 +73,6 @@ int main(int argc, char** argv)
     test_type_int( suite );
     test_type_bool( suite );
     test_type_float( suite );
-/*
-    std::cout << "%TEST_STARTED% test2 (Test_CreateParser)\n" << std::endl;
-    test2();
-    std::cout << "%TEST_FINISHED% time=0 test2 (Test_CreateParser)" << std::endl;
-*/
 
     return EXIT_SUCCESS;
 }
