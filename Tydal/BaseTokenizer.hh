@@ -102,6 +102,7 @@ namespace Tydal
                KEYWORD_ELLIPSIS("\\.\\.\\."),
                LITERAL_INT("(0x[0-9a-fA-F]+|0[0-7]+|[0-9]+)[lLuU]?"),
                LITERAL_FLOAT("[+-]?[0-9]*\\.[0-9]+([eEgG][+-]?[0-9]*\\.[0-9]+)?"),
+            // \"(\\.|[^\\"])*\"
                LITERAL_STRING("\\\"([^\\\\]|\\\\(x[0-9a-fA-F]{1,4}|[0-7]{1,3}|[bfnrt\"\\/']))*\\\""),
                LITERAL_BOOLEAN("true|false"),
                SEPARATOR_SEMICOLON(";"),

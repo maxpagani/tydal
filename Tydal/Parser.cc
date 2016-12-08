@@ -131,9 +131,9 @@ namespace Tydal
                 std::shared_ptr<VariantCaseEntry const>
                 parseVariantCase( std::shared_ptr<BaseType const> fieldType );
 
-                std::shared_ptr<RecordField const> 
+                std::shared_ptr<RecordField const>
                 parseVariant( RecordField::Optionality optionality );
-                
+
                 void log( std::ostringstream const& msg );
                 void log( std::string const& msg );
 
@@ -225,10 +225,12 @@ namespace Tydal
             auto position = m_scan.getPosition();
             if( SCAN_IS( TYPE_ENUM ))
             {
+                ++m_scan;
                 return parseEnum( position, Partiality::COMPLETE );
             }
             else if( SCAN_IS( TYPE_STRING ))
             {
+                ++m_scan;
                 return parseString( position );
             }
             else if( SCAN_IS( TYPE_INT ))
@@ -247,12 +249,14 @@ namespace Tydal
                 // lookup will happen in the second pass, for now let's just
                 // pretend this is correct.
                 std::string name = toString( *m_scan );
+                ++m_scan;
                 return std::make_shared<ReferenceType>( position, name );
             }
             else if( SCAN_IS( CARET ))
             {
                 // lookup in this record and check if a field with the same
                 // name is available
+                ++m_scan;
                 return std::make_shared<OuterFieldReferenceType>( position );
             }
             else
@@ -287,14 +291,13 @@ namespace Tydal
                                                        record );
         }
 
-        std::shared_ptr<RecordField const> 
+        std::shared_ptr<RecordField const>
         Parser::parseVariant( RecordField::Optionality optionality )
         {
             assert( SCAN_IS( KEYWORD_VARIANT ));
             auto position = m_scan.getPosition();
             ++m_scan;
             std::string name = parseSymbol();
-            ++m_scan;
             if( SCAN_IS_NOT( SEPARATOR_COLON ) )
             {
                 throw Errors::ColonExpected(m_scan.getPosition(), toString(*m_scan));
