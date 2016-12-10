@@ -184,7 +184,7 @@ namespace Tydal
             }
             else if( token.id() == TOKEN_ID( LITERAL_STRING))
             {
-                auto stringType = std::dynamic_pointer_cast<SimpleType const>(type);
+                auto stringType = std::dynamic_pointer_cast<StringType const>(type);
                 return stringType != nullptr;
             }
             else if( token.id() == TOKEN_ID( LITERAL_BOOLEAN ))
@@ -279,6 +279,10 @@ namespace Tydal
                                               type->getTypeName() );
             }
             ++m_scan;
+            if( SCAN_IS( SEPARATOR_COLON ))
+            {
+                ++m_scan;
+            }
             auto record = std::make_shared<RecordType>( position,
                                                         Partiality::COMPLETE );
             while( SCAN_IS_NOT( KEYWORD_CASE ) && SCAN_IS_NOT( KEYWORD_END ) )
