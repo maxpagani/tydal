@@ -20,6 +20,8 @@
 #include "Tydal/Grammar/EnumType.hh"
 #include "Tydal/Grammar/StringType.hh"
 #include "Tydal/Errors/BasicError.hh"
+#include "Tydal/Grammar/VariantType.hh"
+#include "Tydal/Grammar/SimpleType.hh"
 
 /*
  * Simple C++ Test Suite
@@ -238,6 +240,17 @@ namespace
         TEST_ASSERT( test, iter == program.end() );
     }
 
+    void
+    testSimpleType( TestSuite const& test,
+                    std::shared_ptr<BaseType const> ptrType,
+                    SimpleType::Type type )
+    {
+        TEST_ASSERT( test, ptrType.operator bool() );
+        auto simpleType = std::dynamic_pointer_cast<SimpleType const>( ptrType );
+        TEST_ASSERT( test, simpleType.operator bool() );
+        TEST_ASSERT( test, simpleType->getType() == type );
+    }
+
     void test_variant( TestSuite const& suite )
     {
         Test test(suite,__func__);
@@ -245,15 +258,42 @@ namespace
             "Type simple: Record\n"
             "    Variant a : String\n"
             "        Case \"ABC\" :\n"
-            "            a : Int\n"
+            "            b : Int\n"
             "        Case \"DEF\" :\n"
-            "            b : String\n"
-            "            c : Int\n"
+            "            c : String\n"
+            "            d : Int\n"
             "    End\n"
             "End"};
         try
         {
             Program program = Tydal::parse( programText, "Variant.tydal" );
+            auto iter = program.begin();
+            TEST_ASSERT( test,iter != program.end() );
+            TEST_ASSERT( test, iter->first == "simple" );
+            auto record = std::dynamic_pointer_cast<RecordType const>( iter->second );
+            TEST_ASSERT( test, record.operator bool() );
+            ++iter;
+            TEST_ASSERT( test,iter == program.end() );
+            auto field = record->begin();
+            TEST_ASSERT( test, field != record->end() );
+            TEST_ASSERT( test, field->first == "a" );
+            auto variant = std::dynamic_pointer_cast<VariantType const>( iter->second );
+            TEST_ASSERT( test, variant.operator bool() );
+            auto type = std::dynamic_pointer_cast<StringType const>(variant->getFieldType());
+            TEST_ASSERT( test, type.operator bool() );
+            ++field;
+            TEST_ASSERT( test, field == record->end() );
+            auto entry = variant->begin();
+            TEST_ASSERT( test, entry != variant->end() );
+            TEST_ASSERT( test, (*entry)->getCaseValue() == "ABC" );
+            auto abcField = (*entry)->begin();
+            TEST_ASSERT( test, abcField != (*entry)->end() );
+            TEST_ASSERT( test, abcField->first == "b" );
+            testSimpleType( test, abcField->second, SimpleType::INT );
+            ++abcField;
+            TEST_ASSERT( test, abcField != (*entry)->end() );
+            TEST_ASSERT( test, abcField->first == "c" )
+            TEST_ASSERT( test, std::dynamic_pointer_cast<BasicType const>() )
         }
         catch( Tydal::Errors::BasicError const& e )
         {
@@ -284,3 +324,18 @@ int main(int argc, char** argv)
     return EXIT_SUCCESS;
 }
 
+/* Errors to check:
+ *
+ * Record has duplicated field 'a'
+ *
+ *         std::string programText{
+            "Type simple: Record\n"
+            "    Variant a : String\n"
+            "        Case \"ABC\" :\n"
+            "            a : Int\n"
+            "        Case \"DEF\" :\n"
+            "            b : String\n"
+            "            c : Int\n"
+            "    End\n"
+            "End"};
+*/
