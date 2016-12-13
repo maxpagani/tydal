@@ -241,7 +241,7 @@ namespace
     }
 
     void
-    testSimpleType( TestSuite const& test,
+    testSimpleType( Test& test,
                     std::shared_ptr<BaseType const> ptrType,
                     SimpleType::Type type )
     {
@@ -249,6 +249,15 @@ namespace
         auto simpleType = std::dynamic_pointer_cast<SimpleType const>( ptrType );
         TEST_ASSERT( test, simpleType.operator bool() );
         TEST_ASSERT( test, simpleType->getType() == type );
+    }
+
+    void
+    testStringType( Test& test,
+                    std::shared_ptr<BaseType const> ptrType )
+    {
+        TEST_ASSERT( test, ptrType.operator bool() );
+        auto simpleType = std::dynamic_pointer_cast<StringType const>( ptrType );
+        TEST_ASSERT( test, simpleType.operator bool() );
     }
 
     void test_variant( TestSuite const& suite )
@@ -273,11 +282,11 @@ namespace
             auto record = std::dynamic_pointer_cast<RecordType const>( iter->second );
             TEST_ASSERT( test, record.operator bool() );
             ++iter;
-            TEST_ASSERT( test,iter == program.end() );
+            TEST_ASSERT( test, iter == program.end() );
             auto field = record->begin();
             TEST_ASSERT( test, field != record->end() );
             TEST_ASSERT( test, field->first == "a" );
-            auto variant = std::dynamic_pointer_cast<VariantType const>( iter->second );
+            auto variant = std::dynamic_pointer_cast<VariantType const>( field->second->getType() );
             TEST_ASSERT( test, variant.operator bool() );
             auto type = std::dynamic_pointer_cast<StringType const>(variant->getFieldType());
             TEST_ASSERT( test, type.operator bool() );
@@ -289,11 +298,24 @@ namespace
             auto abcField = (*entry)->begin();
             TEST_ASSERT( test, abcField != (*entry)->end() );
             TEST_ASSERT( test, abcField->first == "b" );
-            testSimpleType( test, abcField->second, SimpleType::INT );
+            testSimpleType( test, abcField->second->getType(), SimpleType::INT );
             ++abcField;
-            TEST_ASSERT( test, abcField != (*entry)->end() );
-            TEST_ASSERT( test, abcField->first == "c" )
-            TEST_ASSERT( test, std::dynamic_pointer_cast<BasicType const>() )
+            TEST_ASSERT( test, abcField == (*entry)->end() );
+            ++entry;
+            TEST_ASSERT( test, entry != variant->end() );
+            TEST_ASSERT( test, (*entry)->getCaseValue() == "DEF" );
+            auto defField = (*entry)->begin();
+            TEST_ASSERT( test, defField != (*entry)->end() );
+            TEST_ASSERT( test, defField->first == "c" );
+            testStringType( test, defField->second->getType() );
+            ++defField;
+            TEST_ASSERT( test, defField != (*entry)->end() );
+            TEST_ASSERT( test, defField->first == "d" );
+            testSimpleType( test, defField->second->getType(), SimpleType::INT );
+            ++defField;
+            TEST_ASSERT( test, defField == (*entry)->end() );
+            ++entry;
+            TEST_ASSERT( test, entry == variant->end() );
         }
         catch( Tydal::Errors::BasicError const& e )
         {

@@ -314,6 +314,7 @@ namespace Tydal
                 auto caseEntry = parseVariantCase( symbolType );
                 variant->addCase( caseEntry );
             }
+            ++m_scan; // we found it, it's our.
             auto record = std::make_shared<RecordField>( name,
                                                          position,
                                                          variant,
@@ -608,7 +609,7 @@ namespace Tydal
                     msg << "Unexpected token: '"
                         << (*m_scan).value()
                         << "' (expecting keyword "
-                        << m_tokenizer.KEYWORD_TYPE << ")";
+                        << m_tokenizer.KEYWORD_TYPE.definition() << ")";
                     m_log.log( m_scan.getPosition(), msg.str() );
                     seek( m_tokenizer.KEYWORD_TYPE );
                 }
