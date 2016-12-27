@@ -137,19 +137,42 @@ namespace OutputTranslator
         for( auto const& field : *recordType )
         {
             auto record = std::dynamic_pointer_cast<RecordType const>(field.second->getType());
-            translateRecord( name + "_" + field.first,
-                             record,
-                             out );
+            if( record )
+            {
+                translateRecord( name + "_" + field.first,
+                                 record,
+                                 out );
+            }
         }
     }
 
     void
-    Scala::translateVariantBranch( std::string const& name,
+    Scala::translateVariantBranch( std::string const& traitName,
                                    std::shared_ptr<VariantType const> variant,
                                    std::shared_ptr<VariantCaseEntry const> branch,
                                    std::ostream& out )
     {
-
+        std::string branchName = traitName + "_" + branch->getCaseValue();
+        out << margin() << "case class " << branchName << "(\n";
+        if( !branch->isEmpty() )
+        {
+            indent();
+            bool isFirst = true;
+            for( auto const& field : *branch )
+            {
+                if( isFirst )
+                {
+                    isFirst = false;
+                }
+                else
+                {
+                    out << ", ";
+                }
+                printField( out, field );
+            }
+            outdent();
+        }
+        out << ") extends " << traitName << "\n";
     }
 
     void
@@ -160,13 +183,17 @@ namespace OutputTranslator
         for( auto const& field : *recordType )
         {
             auto variant = std::dynamic_pointer_cast<VariantType const>(field.second->getType());
-            for( auto const& branch : *variant )
+            if( variant )
             {
-                translateVariantBranch( name + "_" + field.first + "_" + branch->getCaseValue(),
-                                        variant,
-                                        branch,
-                                        out );
-
+                std::string traitName = name + "_" + field.first;
+                out << margin() << "sealed trait " << traitName << "\n\n";
+                for( auto const& branch : *variant )
+                {
+                    translateVariantBranch( traitName,
+                                            variant,
+                                            branch,
+                                            out );
+                }
             }
         }
     }

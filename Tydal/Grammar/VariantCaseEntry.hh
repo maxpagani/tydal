@@ -31,6 +31,8 @@ namespace Tydal
 
                 ConstIterator begin() const;
                 ConstIterator end() const;
+
+                bool isEmpty() const;
             private:
                 GenericParser::ReadingPosition m_position;
                 std::string m_caseValue;
@@ -55,6 +57,11 @@ namespace Tydal
         inline VariantCaseEntry::ConstIterator VariantCaseEntry::end() const
         {
             return m_fields->end();
+        }
+
+        inline bool VariantCaseEntry::isEmpty() const
+        {
+            return m_fields->begin() == m_fields->end();
         }
 
     }

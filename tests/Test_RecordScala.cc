@@ -72,11 +72,10 @@ void test_record_in_record( TestSuite const& suite )
     );
 }
 
-void test_record_in_record( TestSuite const& suite )
+void test_variant( TestSuite const& suite )
 {
     Test test( suite, __func__ );
-    std::string programText
-    {
+    auto program = Tydal::parse(
         "Type simple: Record\n"
         "    c1: Int\n"
         "    c2: String\n"
@@ -91,8 +90,14 @@ void test_record_in_record( TestSuite const& suite )
         "            c : String\n"
         "            d : Int\n"
         "    End\n"
-        "End"
-};
+        "End",
+        "CreateParser_2.tydal"
+    );
+    TEST_ASSERT(test, program.begin() != program.end() );
+    OutputTranslator::Scala scala;
+    std::ostringstream out;
+    scala.print( program, out );
+    std::cout << out.str() << "\n";
 
 }
 
