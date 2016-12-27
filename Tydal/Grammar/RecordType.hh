@@ -61,6 +61,15 @@ namespace Tydal
             return m_fields.end();
         }
 
+        inline auto begin( RecordType const& record )
+        {
+            return record.begin();
+        }
+
+        inline auto end( RecordType const& record )
+        {
+            return record.end();
+        }
     }
 }
 

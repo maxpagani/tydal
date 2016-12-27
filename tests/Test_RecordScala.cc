@@ -72,12 +72,37 @@ void test_record_in_record( TestSuite const& suite )
     );
 }
 
+void test_record_in_record( TestSuite const& suite )
+{
+    Test test( suite, __func__ );
+    std::string programText
+    {
+        "Type simple: Record\n"
+        "    c1: Int\n"
+        "    c2: String\n"
+        "    c3: Record\n"
+        "        aa: Int\n"
+        "        bb: Bool\n"
+        "    End\n"
+        "    Variant a : String\n"
+        "        Case \"ABC\" :\n"
+        "            b : Int\n"
+        "        Case \"DEF\" :\n"
+        "            c : String\n"
+        "            d : Int\n"
+        "    End\n"
+        "End"
+};
+
+}
+
 int main(int argc, char** argv)
 {
     TestSuite suite( __FILE__ );
 
     test_simple_record( suite );
     test_record_in_record( suite );
+    test_variant( suite );
 
     return EXIT_SUCCESS;
 }

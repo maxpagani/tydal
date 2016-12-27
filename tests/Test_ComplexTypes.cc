@@ -294,7 +294,7 @@ namespace
             TEST_ASSERT( test, field == record->end() );
             auto entry = variant->begin();
             TEST_ASSERT( test, entry != variant->end() );
-            TEST_ASSERT( test, (*entry)->getCaseValue() == "ABC" );
+            TEST_ASSERT( test, (*entry)->getCaseValue() == "\"ABC\"" );
             auto abcField = (*entry)->begin();
             TEST_ASSERT( test, abcField != (*entry)->end() );
             TEST_ASSERT( test, abcField->first == "b" );
@@ -303,7 +303,7 @@ namespace
             TEST_ASSERT( test, abcField == (*entry)->end() );
             ++entry;
             TEST_ASSERT( test, entry != variant->end() );
-            TEST_ASSERT( test, (*entry)->getCaseValue() == "DEF" );
+            TEST_ASSERT( test, (*entry)->getCaseValue() == "\"DEF\"" );
             auto defField = (*entry)->begin();
             TEST_ASSERT( test, defField != (*entry)->end() );
             TEST_ASSERT( test, defField->first == "c" );

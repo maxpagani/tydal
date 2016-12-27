@@ -14,6 +14,7 @@
 
 #include "OutputTranslator/Base.hh"
 #include "Tydal/Grammar/BaseType.hh"
+#include "Tydal/Grammar/VariantType.hh"
 
 namespace OutputTranslator
 {
@@ -35,6 +36,26 @@ namespace OutputTranslator
             virtual void translateArray( std::string const& name,
                                          std::shared_ptr<Tydal::Grammar::ArrayType const> arrayType,
                                          std::ostream& out ) override;
+
+            void translateVariantBranch( std::string const& name,
+                                         std::shared_ptr<Tydal::Grammar::VariantType const> variant,
+                                         std::shared_ptr<Tydal::Grammar::VariantCaseEntry const> branch,
+                                         std::ostream& out );
+            void translateRecordVariant( std::string const& name,
+                                         std::shared_ptr<Tydal::Grammar::RecordType const> recordType,
+                                         std::ostream& out );
+            void translatePlainFields( std::string const& name,
+                                       std::shared_ptr<Tydal::Grammar::RecordType const> recordType,
+                                       std::ostream& out );
+            void translateVariantBranches( std::string const& name,
+                                           std::shared_ptr<Tydal::Grammar::RecordType const> recordType,
+                                           std::ostream& out );
+            void translateSimpleRecord( std::string const& name,
+                                        std::shared_ptr<Tydal::Grammar::RecordType const> recordType,
+                                        std::ostream& out );
+            void translateSubRecords( std::string const& name,
+                                      std::shared_ptr<Tydal::Grammar::RecordType const> recordType,
+                                      std::ostream& out );
 
             void printField( std::ostream& out,
                              Tydal::Grammar::RecordType::ConstIterator::value_type const& field );

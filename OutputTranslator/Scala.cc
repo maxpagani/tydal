@@ -10,6 +10,7 @@
 
 #include <OutputTranslator/Scala.hh>
 #include <iostream>
+#include <sstream>
 
 namespace OutputTranslator
 {
@@ -81,6 +82,11 @@ namespace OutputTranslator
             }
             outdent();
             out << margin() << "}";
+            return;
+        }
+        auto variantType = std::dynamic_pointer_cast<VariantType const>(type);
+        if( variantType != nullptr )
+        {
 
         }
     }
@@ -101,22 +107,109 @@ namespace OutputTranslator
     }
 
     void
-    Scala::translateRecord( std::string const& name,
-                            std::shared_ptr<RecordType const> recordType,
-                            std::ostream& out )
+    Scala::translateSimpleRecord( std::string const& name,
+                                  std::shared_ptr<RecordType const> recordType,
+                                  std::ostream& out )
     {
         out << margin() << "case class " << name << "(\n";
         indent();
         auto iter = recordType->begin();
-        printField( out, *iter );
-        ++iter;
-        for( ; iter != recordType->end(); ++iter )
+        if( iter != recordType->end() )
         {
-            out << ",\n";
             printField( out, *iter );
+            ++iter;
+            for( ; iter != recordType->end(); ++iter )
+            {
+                out << ",\n";
+                printField( out, *iter );
+            }
+            out << "\n";
         }
         outdent();
-        out << "\n" << margin() << ")";
+        out << margin() << ")";
+    }
+
+    void
+    Scala::translateSubRecords( std::string const& name,
+                                std::shared_ptr<RecordType const> recordType,
+                                std::ostream& out )
+    {
+        for( auto const& field : *recordType )
+        {
+            auto record = std::dynamic_pointer_cast<RecordType const>(field.second->getType());
+            translateRecord( name + "_" + field.first,
+                             record,
+                             out );
+        }
+    }
+
+    void
+    Scala::translateVariantBranch( std::string const& name,
+                                   std::shared_ptr<VariantType const> variant,
+                                   std::shared_ptr<VariantCaseEntry const> branch,
+                                   std::ostream& out )
+    {
+
+    }
+
+    void
+    Scala::translateVariantBranches( std::string const& name,
+                                     std::shared_ptr<RecordType const> recordType,
+                                     std::ostream& out )
+    {
+        for( auto const& field : *recordType )
+        {
+            auto variant = std::dynamic_pointer_cast<VariantType const>(field.second->getType());
+            for( auto const& branch : *variant )
+            {
+                translateVariantBranch( name + "_" + field.first + "_" + branch->getCaseValue(),
+                                        variant,
+                                        branch,
+                                        out );
+
+            }
+        }
+    }
+
+    void
+    Scala::translateRecordVariant( std::string const& name,
+                                   std::shared_ptr<Tydal::Grammar::RecordType const> recordType,
+                                   std::ostream& out )
+    {
+
+    }
+
+    void
+    Scala::translatePlainFields( const std::string& name,
+                                 std::shared_ptr<const Tydal::Grammar::RecordType> recordType,
+                                 std::ostream& out )
+    {
+
+    }
+
+    void
+    Scala::translateRecord( std::string const& name,
+                            std::shared_ptr<RecordType const> recordType,
+                            std::ostream& out )
+    {
+        std::ostringstream text;
+
+        text << "case class " << name << " (";
+
+        translateSubRecords( name, recordType, out );
+        translateVariantBranches( name, recordType, out );
+/*
+        implicit val simpleReads = new Reads[Simple] {
+  override def reads(o: JsValue) = o.getAs[String] match {
+    case "ABC" => abcReads.reads(o)
+    case "CDF" => cdfReads.reads(o)
+    case _ => JsFailure("Variant match failed for 'Simple'")
+  }
+ * */
+
+
+        translateRecordVariant( name, recordType, out );
+        translatePlainFields( name, recordType, out );
     }
 
     void
