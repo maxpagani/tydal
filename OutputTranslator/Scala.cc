@@ -206,11 +206,79 @@ namespace OutputTranslator
 
     }
 
+    class PlainFieldIterator
+    {
+        private:
+            typedef Tydal::Grammar::RecordType::ConstIterator ConstIterator;
+        public:
+            PlainFieldIterator( ConstIterator begin,
+                                ConstIterator end ) :
+                        m_iter{ seek(begin,end)},
+                        m_end{ end }
+            {
+            }
+
+            PlainFieldIterator( PlainFieldIterator const& ) = default;
+            PlainFieldIterator& operator=( PlainFieldIterator const& ) = default;
+
+            ConstIterator::value_type operator*() const
+            {
+                return *m_iter;
+            }
+
+            PlainFieldIterator operator++()
+            {
+                if( m_iter != m_end )
+                {
+                    ++m_iter;
+                }
+                return PlainFieldIterator( m_iter, m_end );
+            }
+
+            bool operator != ( ConstIterator const& iter )
+            {
+                return m_iter != iter;
+            }
+        private:
+            ConstIterator m_iter;
+            ConstIterator m_end;
+
+            static ConstIterator seek( ConstIterator iter, ConstIterator end )
+            {
+                while( iter != end )
+                {
+                    auto type = iter->second->getType();
+                    if( !std::dynamic_pointer_cast<RecordType const>(type) &&
+                        !std::dynamic_pointer_cast<VariantType const>(type) )
+                    {
+                        break;
+                    }
+                }
+                return iter;
+            }
+    };
+
     void
     Scala::translatePlainFields( const std::string& name,
                                  std::shared_ptr<const Tydal::Grammar::RecordType> recordType,
                                  std::ostream& out )
     {
+        auto iter = PlainFieldIterator( recordType->begin(),
+                                        recordType->end());
+        if( iter != recordType->end() )
+        {
+
+            printField( out, *iter );
+            ++iter;
+            for( ; iter != recordType->end(); ++iter )
+            {
+                out << ",\n";
+                printField( out, *iter );
+            }
+            out << "\n";
+        }
+        outdent();
+        out << margin() << ")";
 
     }
 
@@ -220,8 +288,6 @@ namespace OutputTranslator
                             std::ostream& out )
     {
         std::ostringstream text;
-
-        text << "case class " << name << " (";
 
         translateSubRecords( name, recordType, out );
         translateVariantBranches( name, recordType, out );
@@ -233,10 +299,13 @@ namespace OutputTranslator
     case _ => JsFailure("Variant match failed for 'Simple'")
   }
  * */
-
-
         translateRecordVariant( name, recordType, out );
+        text << "case class " << name << " (";
+        indent();
         translatePlainFields( name, recordType, out );
+        outdent();
+        text << ")\n";
+        out << text.str();
     }
 
     void
