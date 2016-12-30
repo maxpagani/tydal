@@ -36,7 +36,7 @@ void test_simple_record( TestSuite const& suite )
     std::ostringstream out;
     scala.print( program, out );
     std::cout << out.str() << "\n";
-    TEST_ASSERT( test, out.str() == "case class simple(\n"
+    TEST_ASSERT( test, out.str() == "case class simple (\n"
             "    a: Int,\n"
             "    b: Float,\n"
             "    c: Option[String]\n"

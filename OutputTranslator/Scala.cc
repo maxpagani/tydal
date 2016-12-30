@@ -277,9 +277,6 @@ namespace OutputTranslator
             }
             out << "\n";
         }
-        outdent();
-        out << margin() << ")";
-
     }
 
     void
@@ -300,9 +297,9 @@ namespace OutputTranslator
   }
  * */
         translateRecordVariant( name, recordType, out );
-        text << "case class " << name << " (";
+        text << "case class " << name << " (\n";
         indent();
-        translatePlainFields( name, recordType, out );
+        translatePlainFields( name, recordType, text );
         outdent();
         text << ")\n";
         out << text.str();
