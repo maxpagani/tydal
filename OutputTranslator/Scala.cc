@@ -11,11 +11,47 @@
 #include <OutputTranslator/Scala.hh>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 
 namespace OutputTranslator
 {
     using namespace Tydal::Grammar;
 
+    namespace
+    {
+        std::string toScalaId( std::string const& branchName )
+        {
+            std::string::const_iterator begin=branchName.begin();
+            if( *begin == '"' )
+            {
+                ++begin;
+            }
+            std::string::const_iterator end=branchName.end();
+            --end;
+            if( *end != '"' )
+            {
+                ++end;
+            }
+            std::string id;
+            for( auto i=begin; i!=end; ++i )
+            {
+                if( std::isalnum( *i ) )
+                {
+                    id.push_back( *i );
+                }
+                else {
+                    id.push_back( '_' );
+                    std::ostringstream hex;
+                    hex << std::setfill('0') << std::setw(2) << std::hex
+                        << static_cast<int>(*i);
+                    id.append( hex.str() );
+                }
+            }
+            return id;
+        }
+
+
+    }
     void
     Scala::tydalTypeToScala( std::shared_ptr<BaseType const> type, std::ostream& out )
     {
@@ -152,7 +188,7 @@ namespace OutputTranslator
                                    std::shared_ptr<VariantCaseEntry const> branch,
                                    std::ostream& out )
     {
-        std::string branchName = traitName + "_" + branch->getCaseValue();
+        std::string branchName = traitName + "_" + toScalaId(branch->getCaseValue());
         out << margin() << "case class " << branchName << "(\n";
         if( !branch->isEmpty() )
         {
@@ -172,7 +208,7 @@ namespace OutputTranslator
             }
             outdent();
         }
-        out << ") extends " << traitName << "\n";
+        out << "\n" << margin() << ") extends " << traitName << "\n";
     }
 
     void
