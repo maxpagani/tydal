@@ -253,6 +253,7 @@ namespace OutputTranslator
                     {
                         break;
                     }
+                    ++iter;
                 }
                 return iter;
             }
@@ -286,7 +287,7 @@ namespace OutputTranslator
     {
         std::ostringstream text;
 
-        translateSubRecords( name, recordType, out );
+        //translateSubRecords( name, recordType, out );
         translateVariantBranches( name, recordType, out );
 /*
         implicit val simpleReads = new Reads[Simple] {

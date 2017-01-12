@@ -45,31 +45,40 @@ void test_simple_record( TestSuite const& suite )
 void test_record_in_record( TestSuite const& suite )
 {
     Test test( suite, __func__ );
-    auto program = Tydal::parse(
-        "Type simple : Record\n"
-        "    a: Int\n"
-        "    b: Float\n"
-        "    opt c: Record\n"
-        "        a: String\n"
-        "        b: Boolean\n"
-        "    End\n"
-        "End",
-    "CreateParser_1.tydal" );
+    try
+    {
+        auto program = Tydal::parse(
+            "Type simple : Record\n"
+            "    a: Int\n"
+            "    b: Float\n"
+            "    opt c: Record\n"
+            "        a: String\n"
+            "        b: Boolean\n"
+            "    End\n"
+            "End",
+        "CreateParser_1.tydal" );
 
-    TEST_ASSERT(test, program.begin() != program.end() );
-    OutputTranslator::Scala scala;
-    std::ostringstream out;
-    scala.print( program, out );
-    TEST_ASSERT( test, out.str() ==
-        "case class simple(\n"
-        "    a: Int,\n"
-        "    b: Float,\n"
-        "    c: Option[{\n"
-        "        val a : String\n"
-        "        val b : Boolean\n"
-        "    }]\n"
-        ")"
-    );
+        TEST_ASSERT(test, program.begin() != program.end() );
+        OutputTranslator::Scala scala;
+        std::ostringstream out;
+        scala.print( program, out );
+        std::cout << '>' << out.str() << "<\n";
+        TEST_ASSERT( test, out.str() ==
+            "case class simple (\n"
+            "    a: Int,\n"
+            "    b: Float,\n"
+            "    c: Option[{\n"
+            "        val a : String\n"
+            "        val b : Boolean\n"
+            "    }]\n"
+            ")\n"
+        );
+    }
+    catch( ... )
+    {
+        TEST_ASSERT( test, false );
+    }
+
 }
 
 void test_variant( TestSuite const& suite )
