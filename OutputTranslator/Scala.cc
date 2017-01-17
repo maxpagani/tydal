@@ -211,6 +211,18 @@ namespace OutputTranslator
         out << "\n" << margin() << ") extends " << traitName << "\n";
     }
 
+    namespace
+    {
+        std::string
+        getVariantTypeName( std::string const& enclosingRecordName,
+                            std::string const& fieldName )
+        {
+            std::cout << "ern: " << enclosingRecordName << "\n";
+            std::cout << "fn:  " << fieldName << "\n";
+            return enclosingRecordName + "_" + fieldName;
+        }
+    }
+
     void
     Scala::translateVariantBranches( std::string const& name,
                                      std::shared_ptr<RecordType const> recordType,
@@ -221,7 +233,7 @@ namespace OutputTranslator
             auto variant = std::dynamic_pointer_cast<VariantType const>(field.second->getType());
             if( variant )
             {
-                std::string traitName = name + "_" + field.first;
+                std::string traitName = getVariantTypeName( name, field.first );
                 out << margin() << "sealed trait " << traitName << "\n\n";
                 for( auto const& branch : *variant )
                 {
@@ -236,10 +248,20 @@ namespace OutputTranslator
 
     void
     Scala::translateRecordVariant( std::string const& name,
-                                   std::shared_ptr<Tydal::Grammar::RecordType const> recordType,
+                                   std::shared_ptr<Tydal::Grammar::RecordType const> record,
                                    std::ostream& out )
     {
-
+        for( auto const& field : *record )
+        {
+            auto variant = std::dynamic_pointer_cast<VariantType const>(field.second->getType());
+            if( variant )
+            {
+                std::string const& fieldName = field.first;
+                std::string variantTypeName = getVariantTypeName( name, fieldName );
+                out << margin() << "val " << fieldName << " : "
+                    << variantTypeName << "\n";
+            }
+        }
     }
 
     class PlainFieldIterator
@@ -318,13 +340,13 @@ namespace OutputTranslator
 
     void
     Scala::translateRecord( std::string const& name,
-                            std::shared_ptr<RecordType const> recordType,
+                            std::shared_ptr<RecordType const> record,
                             std::ostream& out )
     {
         std::ostringstream text;
 
         //translateSubRecords( name, recordType, out );
-        translateVariantBranches( name, recordType, out );
+        translateVariantBranches( name, record, out );
 /*
         implicit val simpleReads = new Reads[Simple] {
   override def reads(o: JsValue) = o.getAs[String] match {
@@ -333,10 +355,10 @@ namespace OutputTranslator
     case _ => JsFailure("Variant match failed for 'Simple'")
   }
  * */
-        translateRecordVariant( name, recordType, out );
+        translateRecordVariant( name, record, out );
         text << "case class " << name << " (\n";
         indent();
-        translatePlainFields( name, recordType, text );
+        translatePlainFields( name, record, text );
         outdent();
         text << ")\n";
         out << text.str();
