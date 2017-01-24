@@ -12,6 +12,7 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+#include <numeric>
 
 namespace OutputTranslator
 {
@@ -50,10 +51,59 @@ namespace OutputTranslator
             return id;
         }
 
-
+        std::string
+        getVariantTypeName( std::string const& enclosingRecordName,
+                            std::string const& fieldName )
+        {
+            std::cout << "ern: " << enclosingRecordName << "\n";
+            std::cout << "fn:  " << fieldName << "\n";
+            return enclosingRecordName + "_" + fieldName;
+        }
     }
+
+    void Scala::pushEnclosingRecordName( std::string const& recordName )
+    {
+        m_enclosingRecordNames.push_back( recordName );
+    }
+
+    void Scala::popEnclosingRecordName()
+    {
+        assert( !m_enclosingRecordNames.empty() );
+        m_enclosingRecordNames.pop_back();
+    }
+
+    std::vector<std::string> const& Scala::getEnclosingRecordNames() const
+    {
+        return m_enclosingRecordNames;
+    }
+
+    std::string Scala::getRecordNames() const
+    {
+        auto begin = m_enclosingRecordNames.begin();
+        auto end = m_enclosingRecordNames.end();
+        if( begin == end )
+        {
+            return "";
+        }
+        auto first = begin;
+        ++begin;
+        if( begin == end )
+        {
+            return *first;
+        }
+        return std::accumulate( begin,
+                                end,
+                                *first,
+                                []( std::string const& a, std::string const& b ) -> std::string
+                                {
+                                    return a + "_" + b;
+                                });
+    }
+
     void
-    Scala::tydalTypeToScala( std::shared_ptr<BaseType const> type, std::ostream& out )
+    Scala::tydalTypeToScala( std::shared_ptr<BaseType const> type,
+                             std::string const& fieldName,
+                             std::ostream& out )
     {
         auto simpleType = std::dynamic_pointer_cast<SimpleType const>(type);
         if( simpleType )
@@ -93,7 +143,7 @@ namespace OutputTranslator
         if( arrayType )
         {
             out << "Array[";
-            tydalTypeToScala( arrayType->getItemType(), out );
+            tydalTypeToScala( arrayType->getItemType(), fieldName, out );
             out << "]";
             return;
         }
@@ -109,7 +159,7 @@ namespace OutputTranslator
                 {
                     out << "Option[";
                 }
-                tydalTypeToScala( field.second->getType(), out );
+                tydalTypeToScala( field.second->getType(), fieldName, out );
                 if( field.second->isOptional() )
                 {
                     out << margin() << "]";
@@ -123,6 +173,9 @@ namespace OutputTranslator
         auto variantType = std::dynamic_pointer_cast<VariantType const>(type);
         if( variantType != nullptr )
         {
+            std::string variantTypeName = getVariantTypeName( getRecordNames(), fieldName );
+            out << margin() << "val " << fieldName << " : "
+                << variantTypeName << "\n";
 
         }
     }
@@ -135,7 +188,7 @@ namespace OutputTranslator
             {
                 out << "Option[";
             }
-            tydalTypeToScala( field.second->getType(), out );
+            tydalTypeToScala( field.second->getType(), field.first, out );
             if( field.second->isOptional() )
             {
                 out << "]";
@@ -211,18 +264,6 @@ namespace OutputTranslator
         out << "\n" << margin() << ") extends " << traitName << "\n";
     }
 
-    namespace
-    {
-        std::string
-        getVariantTypeName( std::string const& enclosingRecordName,
-                            std::string const& fieldName )
-        {
-            std::cout << "ern: " << enclosingRecordName << "\n";
-            std::cout << "fn:  " << fieldName << "\n";
-            return enclosingRecordName + "_" + fieldName;
-        }
-    }
-
     void
     Scala::translateVariantBranches( std::string const& name,
                                      std::shared_ptr<RecordType const> recordType,
@@ -256,10 +297,6 @@ namespace OutputTranslator
             auto variant = std::dynamic_pointer_cast<VariantType const>(field.second->getType());
             if( variant )
             {
-                std::string const& fieldName = field.first;
-                std::string variantTypeName = getVariantTypeName( name, fieldName );
-                out << margin() << "val " << fieldName << " : "
-                    << variantTypeName << "\n";
             }
         }
     }
@@ -318,12 +355,11 @@ namespace OutputTranslator
     };
 
     void
-    Scala::translatePlainFields( const std::string& name,
-                                 std::shared_ptr<const Tydal::Grammar::RecordType> recordType,
-                                 std::ostream& out )
+    Scala::translateFields( const std::string& name,
+                            std::shared_ptr<const Tydal::Grammar::RecordType> recordType,
+                            std::ostream& out )
     {
-        auto iter = PlainFieldIterator( recordType->begin(),
-                                        recordType->end());
+        auto iter = recordType->begin();
         if( iter != recordType->end() )
         {
 
@@ -345,6 +381,7 @@ namespace OutputTranslator
     {
         std::ostringstream text;
 
+        pushEnclosingRecordName( name );
         //translateSubRecords( name, recordType, out );
         translateVariantBranches( name, record, out );
 /*
@@ -355,13 +392,14 @@ namespace OutputTranslator
     case _ => JsFailure("Variant match failed for 'Simple'")
   }
  * */
-        translateRecordVariant( name, record, out );
         text << "case class " << name << " (\n";
         indent();
-        translatePlainFields( name, record, text );
+        translateFields( name, record, text );
         outdent();
         text << ")\n";
         out << text.str();
+
+        popEnclosingRecordName();
     }
 
     void
@@ -381,12 +419,12 @@ namespace OutputTranslator
     }
 
     void
-    Scala::translateSimpleType( std::string const& name,
+    Scala::translateSimpleType( std::string const& fieldTypeName,
                                 std::shared_ptr<SimpleType const> simpleType,
                                 std::ostream& out )
     {
-        out << "type " << name << " = ";
-        tydalTypeToScala( simpleType, out );
+        out << "type " << fieldTypeName << " = ";
+        tydalTypeToScala( simpleType, fieldTypeName, out );
     }
 
     void
@@ -395,7 +433,7 @@ namespace OutputTranslator
                            std::ostream& out )
     {
         out << "type " << name << " = Array[";
-        tydalTypeToScala( arrayType->getItemType(), out );
+        tydalTypeToScala( arrayType->getItemType(), name, out );
         out << "]\n";
     }
 

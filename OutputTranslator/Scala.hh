@@ -44,7 +44,7 @@ namespace OutputTranslator
             void translateRecordVariant( std::string const& name,
                                          std::shared_ptr<Tydal::Grammar::RecordType const> recordType,
                                          std::ostream& out );
-            void translatePlainFields( std::string const& name,
+            void translateFields( std::string const& name,
                                        std::shared_ptr<Tydal::Grammar::RecordType const> recordType,
                                        std::ostream& out );
             void translateVariantBranches( std::string const& name,
@@ -62,7 +62,15 @@ namespace OutputTranslator
 
             void
             tydalTypeToScala( std::shared_ptr<Tydal::Grammar::BaseType const> type,
+                              std::string const& fieldName,
                               std::ostream& out );
+
+            void pushEnclosingRecordName( std::string const& recordName );
+            void popEnclosingRecordName();
+            std::vector<std::string> const& getEnclosingRecordNames() const;
+            std::string getRecordNames() const;
+
+            std::vector<std::string> m_enclosingRecordNames;
 
     };
 
