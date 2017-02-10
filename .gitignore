@@ -1,5 +1,4 @@
 .dep.inc
-Makefile
 build/
 dist/
 nbproject/*.mk
