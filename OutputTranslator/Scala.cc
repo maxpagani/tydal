@@ -59,6 +59,29 @@ namespace OutputTranslator
             std::cout << "fn:  " << fieldName << "\n";
             return enclosingRecordName + "_" + fieldName;
         }
+        
+        template<class It> std::string
+        mkString( It begin,
+                  It end,
+                  std::string const& left,
+                  std::string const& separator,
+                  std::string const& right )
+        {
+            std::string result = left;
+            if( begin != end )
+            {
+                result.append( *begin );
+                ++begin;
+                while( begin != end )
+                {
+                    result.append( separator );
+                    result.append( *begin );
+                    ++begin;
+                }
+            }
+            result.append( right );
+            return result;
+        }
     }
 
     void Scala::pushEnclosingRecordName( std::string const& recordName )
@@ -81,23 +104,7 @@ namespace OutputTranslator
     {
         auto begin = m_enclosingRecordNames.begin();
         auto end = m_enclosingRecordNames.end();
-        if( begin == end )
-        {
-            return "";
-        }
-        auto first = begin;
-        ++begin;
-        if( begin == end )
-        {
-            return *first;
-        }
-        return std::accumulate( begin,
-                                end,
-                                *first,
-                                []( std::string const& a, std::string const& b ) -> std::string
-                                {
-                                    return a + "_" + b;
-                                });
+        return mkString( begin, end, "", "_", "");
     }
 
     void
@@ -153,7 +160,7 @@ namespace OutputTranslator
             out << "{\n";
             indent();
             for( auto& field: *recordType )
-            {
+            { 
                 out << margin() << "val " << field.first << " : ";
                 if( field.second->isOptional() )
                 {
@@ -173,26 +180,52 @@ namespace OutputTranslator
         auto variantType = std::dynamic_pointer_cast<VariantType const>(type);
         if( variantType != nullptr )
         {
-            std::string variantTypeName = getVariantTypeName( getRecordNames(), fieldName );
-            out << margin() << "val " << fieldName << " : "
-                << variantTypeName << "\n";
-
+            out << variantType->getFieldType()->getTypeName();
+            return;
         }
     }
 
+    std::string computeVariantName( std::string const& fieldName,
+                                    std::shared_ptr<VariantType const> type )
+    {
+        return fieldName + "_" + "cases";
+    }
+    
+    
     void Scala::printField( std::ostream& out,
                             RecordType::ConstIterator::value_type const& field )
     {
-            out << margin() << field.first << ": ";
-            if( field.second->isOptional() )
+        out << margin() << field.first << ": ";
+        bool isOptional = field.second->isOptional();
+        if( isOptional )
+        {
+            out << "Option[";
+        }
+        auto type = field.second->getType();
+        tydalTypeToScala( type, field.first, out );
+        if( isOptional )
+        {
+            out << "]";
+        }
+        auto variant = std::dynamic_pointer_cast<VariantType const>( type );
+        if( variant != nullptr )
+        {
+            out << ",\n";
+            out << margin() << computeVariantName( field.first, variant )
+                << ": ";
+            if( isOptional )
             {
                 out << "Option[";
             }
-            tydalTypeToScala( field.second->getType(), field.first, out );
-            if( field.second->isOptional() )
+            auto variantTypeName = mkString( getEnclosingRecordNames().begin(),
+                                             getEnclosingRecordNames().end(),
+                                             "", "_", "" );
+            out << getVariantTypeName( getRecordNames(), field.first );
+            if( isOptional )
             {
                 out << "]";
             }
+        }
     }
 
     void

@@ -106,6 +106,26 @@ void test_variant( TestSuite const& suite )
     std::ostringstream out;
     scala.print( program, out );
     std::cout << out.str() << "\n";
+    TEST_ASSERT( test, out.str() == 
+            "sealed trait simple_a\n"
+            "\n"
+            "case class simple_a_ABC(\n"
+            "    b: Int\n"
+            ") extends simple_a\n"
+            "case class simple_a_DEF(\n"
+            "    c: String,     d: Int\n"
+            ") extends simple_a\n"
+            "case class simple (\n"
+            "    a: String,\n"
+            "    a_cases: simple_a,\n"
+            "    c1: Int,\n"
+            "    c2: String,\n"
+            "    c3: {\n"
+            "        val aa : Int\n"
+            "        val bb : Boolean\n"
+            "    }\n"
+            ")\n"
+);
 
 }
 
