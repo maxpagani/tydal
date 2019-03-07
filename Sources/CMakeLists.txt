@@ -14,3 +14,6 @@ include_directories( "${PROJECT_SOURCE_DIR}" )
 set( CMAKE_CXX_FLAGS_DEBUG "-Wall" )
 set( CMAKE_CXX_FLAGS_RELEASE "-Wall" )
 
+include( CTest )
+
+#add_test( )
