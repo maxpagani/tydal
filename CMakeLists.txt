@@ -3,3 +3,5 @@ cmake_minimum_required(VERSION 2.8.4)
 project(Tydal)
 
 add_subdirectory(Sources)
+
+ADD_DEFINITIONs( -Wall -std=gnu++17 )
