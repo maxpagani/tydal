@@ -1,8 +1,1 @@
-.dep.inc
-build/
-dist/
-nbproject/*.mk
-nbproject/*.bash
-nbproject/private/
-
-
+Builds/

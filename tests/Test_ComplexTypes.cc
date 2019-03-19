@@ -1,9 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+# /*
 
+g++ -Wall -ISources -I. -g -std=gnu++17 "$0" \
+    tests/SimpleTestSuite.cc \
+    Sources/Tydal/ErrorFormatterTerse.cc \
+    Sources/Tydal/Parser.cc \
+    Sources/Tydal/TokenIterator.cc \
+    Sources/Tydal/Grammar/?*.cc \
+    Sources/GenericParser/?*.cc \
+    Sources/Tydal/Errors/?*.cc
+./a.out || ./a.exe
+return
+
+
+# */
 /*
  * File:   Test_ComplexTypes.cc
  * Author: max
@@ -11,7 +20,7 @@
  * Created on 5 novembre 2016, 22.04
  */
 
-#include "tests/SimpleTestSuite.hh"
+#include "SimpleTestSuite.hh"
 #include "Tydal/Grammar/Program.hh"
 #include "Tydal/Parser.hh"
 #include "Tydal/Grammar/RecordType.hh"

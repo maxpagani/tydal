@@ -1,10 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+# /*
 
-/*
+g++ -Wall -ISources -I. -g -std=gnu++17 "$0" \
+    tests/SimpleTestSuite.cc \
+    Sources/Tydal/ErrorFormatterTerse.cc \
+    Sources/Tydal/Parser.cc \
+    Sources/Tydal/TokenIterator.cc \
+    Sources/Tydal/Grammar/?*.cc \
+    Sources/GenericParser/?*.cc \
+    Sources/Tydal/Errors/?*.cc \
+    Sources/OutputTranslator/Base.cc \
+    Sources/OutputTranslator/Scala.cc
+./a.out || ./a.exe
+return
+*/
+/**
  * File:   Test_RecordScala.cc
  * Author: max
  *
