@@ -21,7 +21,7 @@ A list of specific terms and acronyms used throughout in this document.
 ## Notes to the release
 
 # Tydal Informal Description
-This section describes the language in an informal manner. This is useful to get a grasp of the langauge.
+This section describes the language in an informal manner. This is useful to get a grasp of the language.
 ## Values
 Values (constant literals) are written using the [JSON](http://json.org/) convention1. According to this convention the type used for a given value is implicit in the notation used:
 
