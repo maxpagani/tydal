@@ -1,5 +1,5 @@
 /**
- * @addtogroup Group
+ * @addtogroup GenericParser
  * @{
  * @file GenericParser/ErrorLogger.hh
  * @author Massimiliano Pagani

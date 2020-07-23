@@ -30,9 +30,9 @@ class ErrorFormatterTerse : public GenericParser::ErrorFormatter
 
     private:
 
-        virtual std::string
+    std::string
         formatMessageImpl( GenericParser::ReadingPosition const& position,
-                           std::string const& message ) const;
+                           std::string const& message ) const override;
 
 };
 
