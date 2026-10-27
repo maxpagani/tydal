@@ -9,6 +9,7 @@
  */
 
 #include "Tydal/Errors/CantMergeDuplicateRecordFields.hh"
+#include <string>
 #include "BasicError.hh"
 #include "CantMergeDuplicateRecordFields.hh"
 
@@ -22,7 +23,10 @@ namespace Tydal
             std::string const& labelName,
             GenericParser::ReadingPosition const& otherPosition
         ) :
-            BasicError{ position, "" },
+            BasicError{ position,
+                        "can't merge record field '" + labelName +
+                        "', already defined at line " +
+                        std::to_string( otherPosition.getLineNumber() ) },
             m_completeTypePosition{ otherPosition },
             m_label{ labelName }
         {

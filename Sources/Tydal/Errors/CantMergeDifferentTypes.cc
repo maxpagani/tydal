@@ -9,6 +9,7 @@
  */
 
 #include "Tydal/Errors/CantMergeDifferentTypes.hh"
+#include <string>
 
 namespace Tydal
 {
@@ -20,7 +21,10 @@ namespace Tydal
             GenericParser::ReadingPosition const& positionTypeB,
             std::string const& typeNameB
         ) :
-            BasicError( positionTypeA, "" ),
+            BasicError( positionTypeA,
+                        "can't merge type '" + typeNameA + "' with type '" +
+                        typeNameB + "' defined at line " +
+                        std::to_string( positionTypeB.getLineNumber() ) ),
             m_typeNameA{ typeNameA },
             m_positionTypeB{ positionTypeB },
             m_typeNameB{ typeNameB }

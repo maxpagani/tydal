@@ -19,6 +19,10 @@ namespace Tydal
                             GenericParser::ErrorLogger& logger );
 
     Grammar::Program parse( std::string const& file,
+                            std::string const& filename,
+                            GenericParser::ErrorLogger& logger );
+
+    Grammar::Program parse( std::string const& file,
                             std::string const& filename );
 
 }

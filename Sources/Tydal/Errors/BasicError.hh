@@ -34,10 +34,22 @@ namespace Tydal
                 virtual ~BasicError() = default;
                 BasicError( BasicError const& copy ) = default;
                 BasicError& operator=( BasicError const& copy ) = default;
+
+                GenericParser::ReadingPosition const& getPosition() const;
             private:
                 GenericParser::ReadingPosition m_position;
         };
-                
+
+// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::: inline methods :::
+// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        inline GenericParser::ReadingPosition const&
+        BasicError::getPosition() const
+        {
+            return m_position;
+        }
+
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: templates :::
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

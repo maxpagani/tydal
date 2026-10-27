@@ -16,7 +16,7 @@ namespace Tydal
     {
         SymbolExpected::SymbolExpected( GenericParser::ReadingPosition const& position,
                                         std::string const& found ) :
-                        BasicError{ position, "" },
+                        BasicError{ position, "expecting a symbol, found '" + found + "'" },
                         m_tokenFound{ found }
         {
         }

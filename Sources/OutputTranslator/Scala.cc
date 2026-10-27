@@ -55,8 +55,6 @@ namespace OutputTranslator
         getVariantTypeName( std::string const& enclosingRecordName,
                             std::string const& fieldName )
         {
-            std::cout << "ern: " << enclosingRecordName << "\n";
-            std::cout << "fn:  " << fieldName << "\n";
             return enclosingRecordName + "_" + fieldName;
         }
         
@@ -458,6 +456,7 @@ namespace OutputTranslator
     {
         out << "type " << fieldTypeName << " = ";
         tydalTypeToScala( simpleType, fieldTypeName, out );
+        out << "\n";
     }
 
     void

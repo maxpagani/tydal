@@ -9,6 +9,7 @@
  */
 
 #include "Tydal/Errors/DuplicateEnumLabel.hh"
+#include <string>
 
 namespace Tydal
 {
@@ -18,7 +19,9 @@ namespace Tydal
             GenericParser::ReadingPosition const& position,
             GenericParser::ReadingPosition const& otherLabelPosition
         ) :
-            BasicError{ position, "" },
+            BasicError{ position,
+                        "duplicated enum label (previously defined at line " +
+                        std::to_string( otherLabelPosition.getLineNumber() ) + ")" },
             m_otherLabelPosition{ otherLabelPosition }
         {
         }

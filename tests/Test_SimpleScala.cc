@@ -23,7 +23,7 @@ namespace
         OutputTranslator::Scala scala;
         std::ostringstream out;
         scala.print( program, out );
-        EXPECT_EQ( out.str(), std::string("type i = ")+typeName );
+        EXPECT_EQ( out.str(), std::string("type i = ")+typeName+"\n" );
     }
 }
 

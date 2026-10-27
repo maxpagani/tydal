@@ -16,7 +16,7 @@ namespace Tydal
     {
         ColonExpected::ColonExpected( GenericParser::ReadingPosition const& position,
                                         std::string const& found ) :
-                        BasicError{ position, "" },
+                        BasicError{ position, "expecting ':', found '" + found + "'" },
                         m_tokenFound{ found }
         {
         }

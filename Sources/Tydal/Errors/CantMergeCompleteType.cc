@@ -9,6 +9,7 @@
  */
 
 #include "Tydal/Errors/CantMergeCompleteType.hh"
+#include <string>
 
 namespace Tydal
 {
@@ -18,7 +19,9 @@ namespace Tydal
             GenericParser::ReadingPosition const& position,
             GenericParser::ReadingPosition const& completeTypePosition
         ) :
-            BasicError{ position, "" },
+            BasicError{ position,
+                        "can't merge into the complete type defined at line " +
+                        std::to_string( completeTypePosition.getLineNumber() ) },
             m_completeTypePosition{ completeTypePosition }
         {
         }
