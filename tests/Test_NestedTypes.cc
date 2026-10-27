@@ -1,29 +1,11 @@
-# /*
-
-g++ -Wall -ISources -I. -g -std=gnu++17 "$0" \
-    tests/SimpleTestSuite.cc \
-    Sources/Tydal/ErrorFormatterTerse.cc \
-    Sources/Tydal/Parser.cc \
-    Sources/Tydal/TokenIterator.cc \
-    Sources/Tydal/Grammar/?*.cc \
-    Sources/GenericParser/?*.cc \
-    Sources/Tydal/Errors/?*.cc
-./a.out || ./a.exe
-return
-./a.out || ./a.exe
-return
-
-
-# /*
+/*
  * File:   Test_NestedTypes.cc
  * Author: max
  *
  * Created on 6 novembre 2016, 22.18
  */
 
-#include <stdlib.h>
-#include <iostream>
-#include "tests/SimpleTestSuite.hh"
+#include <gtest/gtest.h>
 #include "Tydal/Parser.hh"
 #include "Tydal/Grammar/SimpleType.hh"
 #include "Tydal/Grammar/ArrayType.hh"
@@ -31,10 +13,8 @@ return
 
 using namespace Tydal::Grammar;
 
-void test_array_of_records( TestSuite const& suite )
+TEST( NestedTypes, ArrayOfRecords )
 {
-    Test test( suite, __func__ );
-
     std::string fileName{"TypeNested_1.tydal"};
     std::string programText{ "Type ar: Array[Record\n"
                              "  a : Int\n"
@@ -42,19 +22,19 @@ void test_array_of_records( TestSuite const& suite )
                              "End]"};
     Program program = Tydal::parse( programText, fileName.c_str() );
     auto typeIter = program.begin();
-    TEST_ASSERT( test, typeIter != program.end() );
+    ASSERT_NE( typeIter, program.end() );
 
     std::string name;
     std::shared_ptr<BaseType const> type;
     std::tie(name,type) = *typeIter;
-    TEST_ASSERT( test, name == "ar" );
+    EXPECT_EQ( name, "ar" );
     ++typeIter;
-    TEST_ASSERT( test, typeIter == program.end() );
+    EXPECT_EQ( typeIter, program.end() );
 
     auto array = std::dynamic_pointer_cast<ArrayType const>(type);
-    TEST_ASSERT( test, array.operator bool());
+    ASSERT_TRUE( array );
     auto record = std::dynamic_pointer_cast<RecordType const>(array->getItemType());
-    TEST_ASSERT( test, record.operator bool());
+    ASSERT_TRUE( record );
 
     bool aFound = false;
     bool bFound = false;
@@ -62,47 +42,41 @@ void test_array_of_records( TestSuite const& suite )
     {
         if( field.first == "a" )
         {
-            TEST_ASSERT( test, !aFound );
+            EXPECT_FALSE( aFound );
             aFound = true;
-            TEST_ASSERT( test, field.second->getType()->getTypeName() == "Int");
+            EXPECT_EQ( field.second->getType()->getTypeName(), "Int" );
         }
         else if( field.first == "b")
         {
-            TEST_ASSERT( test, !bFound );
+            EXPECT_FALSE( bFound );
             bFound = true;
-            TEST_ASSERT( test, field.second->getType()->getTypeName() == "Float");
+            EXPECT_EQ( field.second->getType()->getTypeName(), "Float" );
         }
         else
         {
-            TEST_ASSERT( test, false );
+            ADD_FAILURE() << "unexpected field " << field.first;
         }
     }
-    TEST_ASSERT( test, aFound && bFound );
+    EXPECT_TRUE( aFound && bFound );
 }
 
-void
-test_record_with_record(TestSuite const& suite)
+TEST( NestedTypes, RecordWithRecord )
 {
-
+    GTEST_SKIP() << "not implemented";
 }
 
-void
-test_record_with_array(TestSuite const& suite)
+TEST( NestedTypes, RecordWithArray )
 {
-
+    GTEST_SKIP() << "not implemented";
 }
 
-void
-test_record_with_enum(TestSuite const& suite)
+TEST( NestedTypes, RecordWithEnum )
 {
-
+    GTEST_SKIP() << "not implemented";
 }
 
-void
-test_string_with_enum(TestSuite const& suite)
+TEST( NestedTypes, StringWithEnum )
 {
-    Test test( suite, __func__ );
-
     std::string fileName{"TypeNested_5.tydal"};
     std::string programText{ "Type str: String(Enum\n"
                              "  FOO\n"
@@ -110,20 +84,5 @@ test_string_with_enum(TestSuite const& suite)
                              "End)"};
     Program program = Tydal::parse( programText, fileName.c_str() );
     auto typeIter = program.begin();
-    TEST_ASSERT( test, typeIter != program.end() );
+    EXPECT_NE( typeIter, program.end() );
 }
-
-
-int main(int argc, char** argv)
-{
-    TestSuite suite( __FILE__ );
-
-    test_array_of_records( suite );
-    test_record_with_record(suite);
-    test_record_with_array(suite);
-    test_record_with_enum(suite);
-    test_string_with_enum(suite);
-
-    return EXIT_SUCCESS;
-}
-

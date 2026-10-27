@@ -1,7 +1,7 @@
 add_subdirectory( Errors )
 add_subdirectory( Grammar )
 
-target_sources( tydal
+target_sources( tydal_core
     PRIVATE
         BaseTokenizer.cc
         BaseTokenizer.hh
