@@ -100,7 +100,6 @@ namespace Tydal
             private:
                 typedef GenericParser::lex::token_def<token_type> Token;
                 void seek( Token const& token );
-                bool isComment( token_type const& token ) const;
 
                 std::shared_ptr<StringType const>
                 parseString( GenericParser::ReadingPosition const& position );
@@ -154,11 +153,6 @@ namespace Tydal
         void Parser::log( std::string const& msg )
         {
             m_log.log( m_scan.getPosition(), msg );
-        }
-
-        bool Parser::isComment( token_type const& token ) const
-        {
-            return token == m_tokenizer.COMMENT.id();
         }
 
         Parser::Parser(TokenIterator begin, TokenIterator end, GenericParser::ErrorLogger& logger) :
