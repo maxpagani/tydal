@@ -1,7 +1,8 @@
-set(CMAKE_LEGACY_CYGWIN_WIN32 0)
-cmake_minimum_required(VERSION 2.8.4)
-project(Tydal)
+cmake_minimum_required(VERSION 3.13)
+project(Tydal CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS ON)
 
 add_subdirectory(Sources)
-
-ADD_DEFINITIONs( -Wall -std=gnu++17 )
