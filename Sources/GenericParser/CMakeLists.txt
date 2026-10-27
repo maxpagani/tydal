@@ -1,4 +1,4 @@
-target_sources( tydal
+target_sources( tydal_core
     PRIVATE
         ErrorFormatter.cc
         ErrorFormatter.hh

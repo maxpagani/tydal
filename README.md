@@ -14,9 +14,15 @@ This project provides a document that defines Tydal and a translator that can be
 Build is based on cmake. First you need to compile tydal. Execute a shell in the root project directory and then:
 ```
 > cd Builds
-> cmake -G "Unix Makefiles" ../Sources
+> cmake ..
 > make
 ```
+
+Unit tests use [GoogleTest](https://github.com/google/googletest) (e.g. `apt install libgtest-dev`). Run them from the `Builds` directory with:
+```
+> ctest
+```
+Pass `-DBUILD_TESTING=OFF` to cmake to build without tests.
 
 In order to install (not yet supported), type the following command
 ```
