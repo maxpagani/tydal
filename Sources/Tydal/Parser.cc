@@ -21,6 +21,7 @@
 #include "Tydal/Errors/TypeExpected.hh"
 #include "Tydal/Errors/InvalidVariantType.hh"
 #include "Tydal/Errors/InvalidLiteral.hh"
+#include "Tydal/Errors/UnexpectedEndOfFile.hh"
 #include "Tydal/Grammar/ReferenceType.hh"
 #include "Tydal/Grammar/OuterFieldReferenceType.hh"
 #include "Tydal/Grammar/VariantType.hh"
@@ -99,6 +100,7 @@ namespace Tydal
 
             private:
                 typedef GenericParser::lex::token_def<token_type> Token;
+                token_type const& current() const;
                 void seek( Token const& token );
 
                 std::shared_ptr<StringType const>
@@ -153,6 +155,22 @@ namespace Tydal
         void Parser::log( std::string const& msg )
         {
             m_log.log( m_scan.getPosition(), msg );
+            ++m_errorsCount;
+        }
+
+        /**
+         * Gives the token at the reading position.
+         *
+         * @return the current token.
+         * @throw Errors::UnexpectedEndOfFile if the input is over.
+         */
+        token_type const& Parser::current() const
+        {
+            if( m_scan == m_end )
+            {
+                throw Errors::UnexpectedEndOfFile( m_scan.getPosition() );
+            }
+            return *m_scan;
         }
 
         Parser::Parser(TokenIterator begin, TokenIterator end, GenericParser::ErrorLogger& logger) :
@@ -165,7 +183,7 @@ namespace Tydal
         }
 
 #define TOKEN_ID(X) (m_tokenizer.X.id())
-#define SCAN_IS(X)  (*m_scan == TOKEN_ID(X))
+#define SCAN_IS(X)  (current() == TOKEN_ID(X))
 #define SCAN_IS_NOT(X)  (!SCAN_IS(X))
 
         bool Parser::isLiteralOfType( token_type token,
@@ -242,7 +260,7 @@ namespace Tydal
             {
                 // lookup will happen in the second pass, for now let's just
                 // pretend this is correct.
-                std::string name = toString( *m_scan );
+                std::string name = toString( current() );
                 ++m_scan;
                 return std::make_shared<ReferenceType>( position, name );
             }
@@ -255,7 +273,7 @@ namespace Tydal
             }
             else
             {
-                throw Errors::InvalidVariantType( position, toString( *m_scan ));
+                throw Errors::InvalidVariantType( position, toString( current() ));
             }
         }
 
@@ -265,8 +283,8 @@ namespace Tydal
             assert( SCAN_IS( KEYWORD_CASE ));
             auto position = m_scan.getPosition();
             ++m_scan;
-            std::string literal = toString( *m_scan );
-            if( !isLiteralOfType( *m_scan, type ))
+            std::string literal = toString( current() );
+            if( !isLiteralOfType( current(), type ))
             {
                 throw Errors::InvalidLiteral( position,
                                               literal,
@@ -298,7 +316,7 @@ namespace Tydal
             std::string name = parseSymbol();
             if( SCAN_IS_NOT( SEPARATOR_COLON ) )
             {
-                throw Errors::ColonExpected(m_scan.getPosition(), toString(*m_scan));
+                throw Errors::ColonExpected(m_scan.getPosition(), toString( current() ));
             }
             ++m_scan;
             auto symbolType = parseVariantType();
@@ -332,18 +350,18 @@ namespace Tydal
             }
             if( SCAN_IS_NOT( SYMBOL ))
             {
-                throw Errors::SymbolExpected( currentPosition, toString(*m_scan) );
+                throw Errors::SymbolExpected( currentPosition, toString( current() ) );
             }
-            std::string symbolName = toString( *m_scan );
+            std::string symbolName = toString( current() );
             ++m_scan;
             if( SCAN_IS_NOT( SEPARATOR_COLON ) )
             {
-                throw Errors::ColonExpected(m_scan.getPosition(), toString(*m_scan));
+                throw Errors::ColonExpected(m_scan.getPosition(), toString( current() ));
             }
             ++m_scan;
             auto fieldType = parseType( m_scan.getPosition() );
             auto field = std::make_shared<RecordField>( symbolName,
-                                                        m_scan.getPosition(),
+                                                        currentPosition,
                                                         fieldType,
                                                         optionality );
             return field;
@@ -370,18 +388,18 @@ namespace Tydal
             if( SCAN_IS_NOT( OPEN_SQUARE_PAREN ))
             {
                 std::ostringstream msg;
-                msg << "expecting: '[', found: '" << (*m_scan).value()
+                msg << "expecting: '[', found: '" << toString( current() )
                     << "'";
-                m_log.log( m_scan.getPosition(), msg.str() );
+                log( msg );
             }
             ++m_scan;
             std::shared_ptr<BaseType const> itemType = parseType( m_scan.getPosition() );
             if( SCAN_IS_NOT( CLOSE_SQUARE_PAREN ))
             {
                 std::ostringstream msg;
-                msg << "expecting: ']', found: '" << (*m_scan).value()
+                msg << "expecting: ']', found: '" << toString( current() )
                     << "'";
-                m_log.log( m_scan.getPosition(), msg.str() );
+                log( msg );
             }
             ++m_scan;
             return std::make_shared<ArrayType>( position, itemType );
@@ -396,7 +414,7 @@ namespace Tydal
             {
                 if( SCAN_IS(SYMBOL) )
                 {
-                    EnumLabel label( m_scan.getPosition(), toString( *m_scan ) );
+                    EnumLabel label( m_scan.getPosition(), toString( current() ) );
                     enumType->addLabel( std::move(label) );
                     ++m_scan;
                     if( SCAN_IS(SEPARATOR_COMMA) )
@@ -407,9 +425,9 @@ namespace Tydal
                 else
                 {
                     std::ostringstream msg;
-                    msg << "expecting enum label, '" << (*m_scan).value()
+                    msg << "expecting enum label, '" << toString( current() )
                         << "' found";
-                    m_log.log( m_scan.getPosition(), msg.str() );
+                    log( msg );
                     seek(m_tokenizer.KEYWORD_END);
                 }
             }
@@ -437,7 +455,7 @@ namespace Tydal
             }
             else if( SCAN_IS(SYMBOL))
             {
-                std::string typeTemplate = toString(*m_scan);
+                std::string typeTemplate = toString( current() );
                 stringType = std::make_shared<StringType const>( position, typeTemplate );
                 ++m_scan;
             }
@@ -445,14 +463,14 @@ namespace Tydal
             {
                 std::ostringstream msg;
                 msg << "expecting a template name or an enumeration, '"
-                    << (*m_scan).value() << "' found";
-                m_log.log( m_scan.getPosition(), msg.str() );
+                    << toString( current() ) << "' found";
+                log( msg );
                 seek( m_tokenizer.CLOSE_PAREN );
             }
             if( SCAN_IS_NOT( CLOSE_PAREN ))
             {
                 throw Errors::RightBananaExpected( m_scan.getPosition(),
-                                                   toString( *m_scan));
+                                                   toString( current() ));
             }
             ++m_scan;
             return stringType;
@@ -461,14 +479,14 @@ namespace Tydal
         std::string Parser::parseSymbol()
         {
             assert( SCAN_IS(SYMBOL) );
-            std::string symbol = toString( *m_scan );
+            std::string symbol = toString( current() );
             ++m_scan;
             return symbol;
         }
 
         bool Parser::parseToken( Token const& token )
         {
-            if( *m_scan == token.id() )
+            if( current() == token.id() )
             {
                 ++m_scan;
                 return true;
@@ -482,7 +500,7 @@ namespace Tydal
 #define TOKEN_SWITCH    if( false )                                 \
                         {
 #define CASE(X)         }                                           \
-                        else if( *m_scan == m_tokenizer.X.id() )    \
+                        else if( current() == m_tokenizer.X.id() )  \
                         {
 #define ELSE            }                                           \
                         else                                        \
@@ -519,7 +537,7 @@ namespace Tydal
                     ++m_scan;
                     return parseString( position );
             ELSE
-                throw Errors::TypeExpected( m_scan.getPosition(), toString( *m_scan ));
+                throw Errors::TypeExpected( m_scan.getPosition(), toString( current() ));
             END_SWITCH
         }
 
@@ -539,7 +557,7 @@ namespace Tydal
             if( !SCAN_IS( SYMBOL ))
             {
                 std::ostringstream msg;
-                msg << "Expecing symbol, found '" << (*m_scan).value() << "'";
+                msg << "Expecing symbol, found '" << toString( current() ) << "'";
                 m_log.log( m_scan.getPosition(), msg.str() );
                 ++m_errorsCount;
                 typeName = "(unknown)";
@@ -551,11 +569,11 @@ namespace Tydal
             if( !parseToken( m_tokenizer.SEPARATOR_COLON ) )
             {
                 std::ostringstream msg;
-                msg << "Expecing ':', found '" << (*m_scan).value() << "'";
+                msg << "Expecing ':', found '" << toString( current() ) << "'";
                 m_log.log( m_scan.getPosition(), msg.str() );
                 ++m_errorsCount;
             }
-            if( *m_scan == m_tokenizer.KEYWORD_PARTIAL.id() )
+            if( SCAN_IS( KEYWORD_PARTIAL ) )
             {
                 ++m_scan;
                 std::shared_ptr<BaseType const> partialType;
@@ -594,17 +612,26 @@ namespace Tydal
             {
                 if( SCAN_IS( KEYWORD_TYPE ) )
                 {
-                    parseCompleteOrPartialType();
+                    try
+                    {
+                        parseCompleteOrPartialType();
+                    }
+                    catch( Errors::BasicError const& error )
+                    {
+                        m_log.log( error.getPosition(), error.what() );
+                        ++m_errorsCount;
+                        seek( m_tokenizer.KEYWORD_TYPE );
+                    }
                 }
                 else
                 {
                     // error
                     std::ostringstream msg;
                     msg << "Unexpected token: '"
-                        << (*m_scan).value()
+                        << toString( current() )
                         << "' (expecting keyword "
                         << m_tokenizer.KEYWORD_TYPE.definition() << ")";
-                    m_log.log( m_scan.getPosition(), msg.str() );
+                    log( msg );
                     seek( m_tokenizer.KEYWORD_TYPE );
                 }
             }
@@ -629,7 +656,9 @@ namespace Tydal
         return parser.parse();
     }
 
-    Program parse( std::string const& file, std::string const& filename )
+    Program parse( std::string const& file,
+                   std::string const& filename,
+                   GenericParser::ErrorLogger& logger )
     {
         char const* textBegin = file.c_str();
         char const* textEnd = textBegin+file.size();
@@ -642,8 +671,13 @@ namespace Tydal
                                     textBegin, // lexerBegin,
                                     textEnd ); // lexerEnd );
         Tydal::TokenIterator end(tokenizer);
-        ErrorFormatterTerse formatter;
-        GenericParser::ErrorLogger logger( &formatter, std::cout );
         return Tydal::parse( begin, end, logger );
+    }
+
+    Program parse( std::string const& file, std::string const& filename )
+    {
+        ErrorFormatterTerse formatter;
+        GenericParser::ErrorLogger logger( &formatter, std::cerr );
+        return parse( file, filename, logger );
     }
 }

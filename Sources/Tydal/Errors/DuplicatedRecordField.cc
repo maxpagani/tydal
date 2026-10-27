@@ -9,6 +9,7 @@
  */
 
 #include "Tydal/Errors/DuplicatedRecordField.hh"
+#include <string>
 
 namespace Tydal
 {
@@ -20,7 +21,10 @@ namespace Tydal
             const std::string& fieldName, 
             const GenericParser::ReadingPosition& otherPosition
         ) :
-            BasicError{position,""},
+            BasicError{ position,
+                        "duplicated record field '" + fieldName +
+                        "' (previously defined at line " +
+                        std::to_string( otherPosition.getLineNumber() ) + ")" },
             m_fieldName{ fieldName },
             m_otherPosition{ otherPosition } 
         {

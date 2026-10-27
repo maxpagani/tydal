@@ -31,12 +31,18 @@ namespace GenericParser
             void log( ReadingPosition const& position,
                       std::string const& message );
 
+            /**
+             * @return the number of messages logged so far.
+             */
+            int getErrorCount() const;
+
         private:
             ErrorLogger( ErrorLogger const& copy );
             ErrorLogger& operator=( ErrorLogger const& copy );
 
             ErrorFormatter* formatter_;
             std::ostream& out_;
+            int errorCount_ = 0;
     };
 }
 #endif

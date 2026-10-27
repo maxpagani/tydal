@@ -29,6 +29,13 @@ namespace GenericParser
     {
         std::string logRecord = formatter_->format( position, message );
         out_ << logRecord << '\n';
+        ++errorCount_;
+    }
+
+    int
+    ErrorLogger::getErrorCount() const
+    {
+        return errorCount_;
     }
 
 }

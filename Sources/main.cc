@@ -79,14 +79,25 @@ int main( int argc, char** argv )
         std::istreambuf_iterator<char> scan( in );
         std::string file( scan, endOfInput );
 
-        Tydal::Grammar::Program program = Tydal::parse( file, argv[1] );
+        ErrorFormatterTerse formatter;
+        GenericParser::ErrorLogger logger( &formatter, std::cerr );
+        Tydal::Grammar::Program program = Tydal::parse( file, argv[1], logger );
+        if( logger.getErrorCount() > 0 )
+        {
+            return EXIT_FAILURE;
+        }
         OutputTranslator::Factory::getTranslatorFor( OutputTranslator::Factory::SCALA ).print( program, std::cout );
     }
     catch( boost::lexer::runtime_error const& e )
     {
         std::cerr << "lexer fatal: " << e.what() << "\n";
+        return EXIT_FAILURE;
     }
-    in.close();
+    catch( std::exception const& e )
+    {
+        std::cerr << "fatal: " << e.what() << "\n";
+        return EXIT_FAILURE;
+    }
 
     return EXIT_SUCCESS;
 }

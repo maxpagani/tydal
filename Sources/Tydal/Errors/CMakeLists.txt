@@ -26,4 +26,6 @@ target_sources( tydal_core
         SymbolExpected.hh
         TypeExpected.cc
         TypeExpected.hh
+        UnexpectedEndOfFile.cc
+        UnexpectedEndOfFile.hh
 )

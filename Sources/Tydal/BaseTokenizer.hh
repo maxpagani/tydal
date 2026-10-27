@@ -60,7 +60,8 @@ namespace Tydal
                 SEPARATOR_SEMICOLON,    // ;
                 SEPARATOR_COMMA,        // ,
                 SEPARATOR_COLON,        // :
-                SYMBOL /*, INVALID */;  // [a-zA-Z_][a-zA-Z_]*
+                SYMBOL,                 // [a-zA-Z_][a-zA-Z_]*
+                INVALID;                // any other character
 
 
             bool
@@ -108,8 +109,10 @@ namespace Tydal
                SEPARATOR_SEMICOLON(";"),
                SEPARATOR_COMMA(","),
                SEPARATOR_COLON(":"),
-               SYMBOL("[a-zA-Z_][a-zA-Z_0-9]*") /*,
-               INVALID( ".*" ) */
+               SYMBOL("[a-zA-Z_][a-zA-Z_0-9]*"),
+               // must stay last: matches a single character no other token
+               // accepts, so the lexer never stalls on unknown input.
+               INVALID(".")
     {
         using boost::spirit::lex::_start;
         using boost::spirit::lex::_end;
@@ -146,7 +149,8 @@ namespace Tydal
                      SEPARATOR_SEMICOLON |
                      SEPARATOR_COMMA |
                      SEPARATOR_COLON |
-                     SYMBOL /*| INVALID */;
+                     SYMBOL |
+                     INVALID;
     //    this->self( "WS" ) = lex::token_def<>( "[ \\t\\n]+" );
     /*
         this->self =
